@@ -11,9 +11,7 @@ import jakarta.validation.constraints.Size;
 @Table(name = "libro")
 public class Libro {
     @Id
-    @Column(name = "isbn", nullable = false, length = 13)
-    @Size(min = 13, max = 13, message = "El ISBN debe tener exactamente 13 caracteres")
-    @Pattern(regexp = "\\d{13}", message = "El ISBN debe contener solo números")
+    @Column(name = "isbn", nullable = false, length = 20)
     private String isbn;
 
     @Column(name = "titulo", nullable = false, length = 200)

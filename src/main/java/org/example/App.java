@@ -1,6 +1,7 @@
 package org.example;
 
 import Entidades.Ejemplar;
+import Entidades.GestionBiblioteca;
 import Entidades.Libro;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -16,15 +17,16 @@ public class App
     public static void main( String[] args )
     {
         Scanner t = new Scanner(System.in);
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("biblioteca");
-        EntityManager em = emf.createEntityManager();
+        GestionBiblioteca gestion = new GestionBiblioteca();
+        /*EntityManagerFactory emf = Persistence.createEntityManagerFactory("biblioteca");
+        EntityManager em = emf.createEntityManager();*/
 
 
-        Query q = em.createQuery("SELECT e.libroIsbn.isbn, e.estado FROM Ejemplar e");
+        /*Query q = em.createQuery("SELECT e.libroIsbn.isbn, e.estado FROM Ejemplar e");
         List<Object[]> objects = q.getResultList();
         for (Object[] o: objects) {
             System.out.println(o[0] + " (" + o[1] + ") ");
-        }
+        }*/
 
         // Insertar
         /*try {
@@ -80,7 +82,7 @@ public class App
         */
         //
 
-        int opcion;
+        int opcion = 0;
 
         do {
             System.out.println("""
@@ -96,71 +98,193 @@ public class App
 
             try {
                 opcion = t.nextInt();
+                t.nextLine();
 
-                if (opcion == 1) {
-                    System.out.println("""
-                    --------- Menu de Libros --------
-                    1. Agregar.
-                    2. Mostrar.
-                    3. Actualizar.
-                    4. Eliminar.
-                    0. Cerrar menu.
-                    ---------------------------------
-                    Elige una opcion:""");
+                int subOpcion;
+                switch (opcion) {
+                    case 1 -> { // GESTIÓN DE LIBROS
+                        do {
+                            System.out.println("""
+                        --------- Menu de Libros --------
+                        1. Agregar.
+                        2. Mostrar.
+                        3. Actualizar.
+                        4. Eliminar.
+                        0. Volver.
+                        ---------------------------------
+                        Elige una opcion:""");
+                            subOpcion = t.nextInt();
+                            t.nextLine(); // Limpiar buffer
 
-                } else if (opcion == 2) {
-                    System.out.println("""
-                    --------- Menu de ejemplares --------
-                    1. Agregar.
-                    2. Mostrar.
-                    3. Actualizar.
-                    4. Eliminar.
-                    5. Cerrar menu.
-                    -------------------------------------
-                    Elige una opcion:""");
+                            switch (subOpcion) {
+                                case 1 -> {
+                                    System.out.print("ISBN: "); String isbn = t.nextLine();
+                                    System.out.print("Título: "); String titulo = t.nextLine();
+                                    System.out.print("Autor: "); String autor = t.nextLine();
+                                    gestion.insertarLibro(isbn, titulo, autor);
+                                }
+                                case 2 -> gestion.mostrarLibros();
+                                case 3 -> {
+                                    System.out.print("ISBN del libro a actualizar: "); String isbn = t.nextLine();
+                                    System.out.print("Nuevo Título: "); String tit = t.nextLine();
+                                    System.out.print("Nuevo Autor: "); String aut = t.nextLine();
+                                    GestionBiblioteca.actualizarLibro(isbn, tit, aut);
+                                }
+                                case 4 -> {
+                                    System.out.print("ISBN del libro a eliminar: "); String isbn = t.nextLine();
+                                    gestion.eliminarLibro(isbn);
+                                }
+                            }
+                        } while (subOpcion != 0);
+                    }
+                    case 2 -> {
+                        do {
+                            System.out.println("""
+                        --------- Menu de ejemplares --------
+                        1. Agregar.
+                        2. Mostrar.
+                        3. Actualizar.
+                        4. Eliminar.
+                        0. Volver.
+                        -------------------------------------
+                        Elige una opcion:""");
+                            subOpcion = t.nextInt();
+                            t.nextLine(); // Limpiar buffer
 
-                } else if (opcion == 3) {
-                    System.out.println("""
-                    --------- Menu de usuarios --------
-                    1. Agregar.
-                    2. Mostrar.
-                    3. Actualizar.
-                    4. Eliminar.
-                    0. Cerrar menu.
-                    -----------------------------------
-                    Elige una opcion:""");
+                            switch (subOpcion) {
+                                /*case 1 -> {
+                                    System.out.print("ISBN: "); String isbn = t.nextLine();
+                                    System.out.print("Título: "); String titulo = t.nextLine();
+                                    System.out.print("Autor: "); String autor = t.nextLine();
+                                    GestionBiblioteca.insertarLibro(isbn, titulo, autor);
+                                }
+                                case 2 -> GestionBiblioteca.mostrarLibros();
+                                case 3 -> {
+                                    System.out.print("ISBN del libro a actualizar: "); String isbn = t.nextLine();
+                                    System.out.print("Nuevo Título: "); String tit = t.nextLine();
+                                    System.out.print("Nuevo Autor: "); String aut = t.nextLine();
+                                    GestionBiblioteca.actualizarLibro(isbn, tit, aut);
+                                }
+                                case 4 -> {
+                                    System.out.print("ISBN del libro a eliminar: "); String isbn = t.nextLine();
+                                    GestionBiblioteca.eliminarLibro(isbn);
+                                }*/
+                            }
+                        } while (subOpcion != 0);
+                    }
+                    case 3 -> {
+                        do {
+                            System.out.println("""
+                        --------- Menu de usuarios --------
+                        1. Agregar.
+                        2. Mostrar.
+                        3. Actualizar.
+                        4. Eliminar.
+                        0. Volver.
+                        -----------------------------------
+                        Elige una opcion:""");
+                            subOpcion = t.nextInt();
+                            t.nextLine(); // Limpiar buffer
 
-                } else if (opcion == 4) {
-                    System.out.println("""
-                    --------- Menu de préstamos --------
-                    1. Agregar.
-                    2. Mostrar.
-                    3. Actualizar.
-                    4. Eliminar.
-                    0. Cerrar menu.
-                    ----------------------------------
-                    Elige una opcion:""");
+                            switch (subOpcion) {
+                                /*case 1 -> {
+                                    System.out.print("ISBN: "); String isbn = t.nextLine();
+                                    System.out.print("Título: "); String titulo = t.nextLine();
+                                    System.out.print("Autor: "); String autor = t.nextLine();
+                                    GestionBiblioteca.insertarLibro(isbn, titulo, autor);
+                                }
+                                case 2 -> GestionBiblioteca.mostrarLibros();
+                                case 3 -> {
+                                    System.out.print("ISBN del libro a actualizar: "); String isbn = t.nextLine();
+                                    System.out.print("Nuevo Título: "); String tit = t.nextLine();
+                                    System.out.print("Nuevo Autor: "); String aut = t.nextLine();
+                                    GestionBiblioteca.actualizarLibro(isbn, tit, aut);
+                                }
+                                case 4 -> {
+                                    System.out.print("ISBN del libro a eliminar: "); String isbn = t.nextLine();
+                                    GestionBiblioteca.eliminarLibro(isbn);
+                                }*/
+                            }
+                        } while (subOpcion != 0);
+                    }
+                    case 4 -> {
+                        do {
+                            System.out.println("""
+                        --------- Menu de préstamos --------
+                        1. Agregar.
+                        2. Mostrar.
+                        3. Actualizar.
+                        4. Eliminar.
+                        0. Volver.
+                        ------------------------------------
+                        Elige una opcion:""");
+                            subOpcion = t.nextInt();
+                            t.nextLine(); // Limpiar buffer
 
-                } else if (opcion == 5) {
-                    System.out.println("""
-                    --------- Visualización de información --------
-                    1. Usuario gestor.
-                    2. Usuario normal.
-                    0. Cerrar menu.
-                    -----------------------------------------------
-                    Elige una opcion:""");
+                            switch (subOpcion) {
+                                /*case 1 -> {
+                                    System.out.print("ISBN: "); String isbn = t.nextLine();
+                                    System.out.print("Título: "); String titulo = t.nextLine();
+                                    System.out.print("Autor: "); String autor = t.nextLine();
+                                    GestionBiblioteca.insertarLibro(isbn, titulo, autor);
+                                }
+                                case 2 -> GestionBiblioteca.mostrarLibros();
+                                case 3 -> {
+                                    System.out.print("ISBN del libro a actualizar: "); String isbn = t.nextLine();
+                                    System.out.print("Nuevo Título: "); String tit = t.nextLine();
+                                    System.out.print("Nuevo Autor: "); String aut = t.nextLine();
+                                    GestionBiblioteca.actualizarLibro(isbn, tit, aut);
+                                }
+                                case 4 -> {
+                                    System.out.print("ISBN del libro a eliminar: "); String isbn = t.nextLine();
+                                    GestionBiblioteca.eliminarLibro(isbn);
+                                }*/
+                            }
+                        } while (subOpcion != 0);
+                    }
+                    case 5 -> {
+                        do {
+                            System.out.println("""
+                        ----- Visualización de información ----
+                        1. Usuario gestor.
+                        2. Usuario normal.
+                        0. Cerrar menu.
+                        ---------------------------------------
+                        Elige una opcion:""");
+                            subOpcion = t.nextInt();
+                            t.nextLine(); // Limpiar buffer
 
-                } else if (opcion < 0 || opcion > 5) {
-                    System.err.println("Opcion incorrecta.\n");
+                            switch (subOpcion) {
+                                /*case 1 -> {
+                                    System.out.print("ISBN: "); String isbn = t.nextLine();
+                                    System.out.print("Título: "); String titulo = t.nextLine();
+                                    System.out.print("Autor: "); String autor = t.nextLine();
+                                    GestionBiblioteca.insertarLibro(isbn, titulo, autor);
+                                }
+                                case 2 -> GestionBiblioteca.mostrarLibros();
+                                case 3 -> {
+                                    System.out.print("ISBN del libro a actualizar: "); String isbn = t.nextLine();
+                                    System.out.print("Nuevo Título: "); String tit = t.nextLine();
+                                    System.out.print("Nuevo Autor: "); String aut = t.nextLine();
+                                    GestionBiblioteca.actualizarLibro(isbn, tit, aut);
+                                }
+                                case 4 -> {
+                                    System.out.print("ISBN del libro a eliminar: "); String isbn = t.nextLine();
+                                    GestionBiblioteca.eliminarLibro(isbn);
+                                }*/
+                            }
+                        } while (subOpcion != 0);
+                    }
+                    case 0 -> System.out.println("Saliendo del sistema...");
+                    default -> System.err.println("Opción no válida.");
                 }
             } catch (InputMismatchException e) {
-                System.err.println("Solo se acepta números, y no se aceptan números tan largos.\n");
-                t.next();
-                opcion = 0;
+                System.err.println("Error: Introduce solo números.");
+                t.next(); // Limpiar el error
             }
             System.out.println();
 
-        } while (opcion != 6);
+        } while (opcion != 0);
 
         System.out.println("Ha terminado el menú.");
 
