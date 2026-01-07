@@ -26,7 +26,7 @@ public class Libro {
         this.autor = autor;
     }
 
-    public Libro() {}
+    public Libro(){}
 
     public String getIsbn() {
         return isbn;
