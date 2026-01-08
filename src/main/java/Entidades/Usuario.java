@@ -31,14 +31,12 @@ public class Usuario {
     @Column(name = "penalizacionHasta")
     private LocalDate penalizacionHasta;
 
-    public Usuario(Integer id, String dni, String nombre, String email, String password, UsuarioTipo tipo, LocalDate penalizacionHasta) {
-        this.id = id;
+    public Usuario(String dni, String nombre, String email, String password, UsuarioTipo tipo) {
         this.dni = dni;
         this.nombre = nombre;
         this.email = email;
         this.password = password;
         this.tipo = tipo;
-        this.penalizacionHasta = penalizacionHasta;
     }
 
     public Usuario() {}
