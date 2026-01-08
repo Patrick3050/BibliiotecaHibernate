@@ -1,6 +1,8 @@
 package org.example;
 
 import Entidades.GestionBiblioteca;
+import Entidades.Usuario;
+import Entidades.UsuarioTipo;
 
 import java.time.LocalDate;
 import java.util.InputMismatchException;
@@ -128,9 +130,8 @@ public class App
                                 System.out.println("""
                                 ----------------------------
                                 Selecciona el nuevo estado:
-                                1.Disponible
-                                2.Prestado
-                                3.Dañado
+                                1.Prestado
+                                2.Dañado
                                 ----------------------------
                                 Elige una opcion:""");
                                 int estado = leerOpcion(t);
@@ -177,10 +178,9 @@ public class App
                                 String pass = t.nextLine();
                                 System.out.println("""
                                 ----------------------------
-                                Selecciona el nuevo estado:
-                                1.Disponible
-                                2.Prestado
-                                3.Dañado
+                                Selecciona el tipo:
+                                1.Normal
+                                2.Administrador
                                 ----------------------------
                                 Elige una opcion:""");
                                 int tipo = leerOpcion(t);
@@ -282,7 +282,7 @@ public class App
                     System.out.print("Introduce tu DNI para acceder al panel: ");
                     String dniAcceso = t.nextLine();
                     // Buscamos el usuario en la base de datos para saber quién es
-                    Entidades.Usuario userActivo = gestion.buscarUsuarioPorDni(dniAcceso);
+                    Usuario userActivo = gestion.buscarUsuarioPorDni(dniAcceso);
 
                     if (userActivo == null) {
                         System.err.println("Acceso denegado: El usuario no existe.\n");
@@ -293,7 +293,7 @@ public class App
                             System.out.println("Hola, " + userActivo.getNombre());
 
                             // Si es administrador, le mostramos el menú de gestor
-                            if (userActivo.getTipo() == Entidades.UsuarioTipo.administrador) {
+                            if (userActivo.getTipo() == UsuarioTipo.administrador) {
                                 System.out.println("""
                                         ------------------------------------------------------
                                         1. Ver todos los préstamos de la biblioteca (Global).
@@ -314,7 +314,7 @@ public class App
                             subOpcion = leerOpcion(t);
 
                             // LÓGICA SEGÚN EL ROL
-                            if (userActivo.getTipo() == Entidades.UsuarioTipo.administrador) {
+                            if (userActivo.getTipo() == UsuarioTipo.administrador) {
                                 switch (subOpcion) {
                                     case 1 -> gestion.mostrarPrestamos(); // El gestor ve todo
                                     case 2 -> gestion.mostrarUsuarios();

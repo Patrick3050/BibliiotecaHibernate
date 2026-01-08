@@ -181,9 +181,8 @@ public class GestionBiblioteca {
             if (ejemplar != null) {
                 // Mapeamos la opción del menú al Enum
                 EstadoEjemplar nuevoEstado = switch (opcionEstado) {
-                    case 1 -> EstadoEjemplar.Disponible;
-                    case 2 -> EstadoEjemplar.Prestado;
-                    case 3 -> EstadoEjemplar.Dañado;
+                    case 1 -> EstadoEjemplar.Prestado;
+                    case 2 -> EstadoEjemplar.Dañado;
                     default -> null;
                 };
 
